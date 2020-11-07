@@ -70,6 +70,22 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
+-- -----------------------------------------------------
+-- Table `mapeamento`.`localizar`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mapeamento`.`localizar` (
+  `idlocalizar` INT(11) NOT NULL AUTO_INCREMENT,
+  `LATITUDE` DECIMAL(10,8) NOT NULL,
+  `LONGITUDE` DECIMAL(10,8) NOT NULL,
+  `mapa_idmapa` INT(11) NOT NULL,
+  PRIMARY KEY (`idlocalizar`),
+  UNIQUE INDEX `idlocalizar_UNIQUE` (`idlocalizar` ASC) VISIBLE,
+  INDEX `fk_localizar_mapa1_idx` (`mapa_idmapa` ASC) VISIBLE)
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
