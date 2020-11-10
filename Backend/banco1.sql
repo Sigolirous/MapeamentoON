@@ -18,10 +18,11 @@ CREATE SCHEMA IF NOT EXISTS `mapeamento` DEFAULT CHARACTER SET utf8mb4 COLLATE u
 USE `mapeamento` ;
 
 -- -----------------------------------------------------
--- Table `mapeamento`.`mapa`
+-- Table `mapeamento`.`relato`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mapeamento`.`mapa` (
+CREATE TABLE IF NOT EXISTS `mapeamento`.`relato` (
   `idmapa` INT(11) NOT NULL AUTO_INCREMENT,
+  `RELATO_MAO_LIVRE` VARCHAR(300) NULL DEFAULT NULL,
   `RELACAO_AGRESSOR` VARCHAR(45) NOT NULL,
   `DATA` DATETIME NOT NULL,
   `LOCAL` VARCHAR(45) NOT NULL,
@@ -62,25 +63,25 @@ CREATE TABLE IF NOT EXISTS `mapeamento`.`autor` (
   `NACIONALIDADE_AUTOR` VARCHAR(45) NULL DEFAULT NULL,
   `ETNIA_AUTOR` VARCHAR(45) NULL DEFAULT NULL,
   `IDADE_AUTOR` INT(11) NULL DEFAULT NULL,
-  `mapa_idmapa` INT(11) NOT NULL,
+  `relato_idmapa` INT(11) NOT NULL,
   PRIMARY KEY (`idautor`),
-  INDEX `fk_autor_mapa_idx` (`mapa_idmapa` ASC) VISIBLE)
+  INDEX `fk_autor_relato1_idx` (`relato_idmapa` ASC) VISIBLE)
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `mapeamento`.`localizar`
+-- Table `mapeamento`.`localizacao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mapeamento`.`localizar` (
+CREATE TABLE IF NOT EXISTS `mapeamento`.`localizacao` (
   `idlocalizar` INT(11) NOT NULL AUTO_INCREMENT,
   `LATITUDE` DECIMAL(10,8) NOT NULL,
   `LONGITUDE` DECIMAL(10,8) NOT NULL,
-  `mapa_idmapa` INT(11) NOT NULL,
+  `relato_idmapa` INT(11) NOT NULL,
   PRIMARY KEY (`idlocalizar`),
   UNIQUE INDEX `idlocalizar_UNIQUE` (`idlocalizar` ASC) VISIBLE,
-  INDEX `fk_localizar_mapa1_idx` (`mapa_idmapa` ASC) VISIBLE)
+  INDEX `fk_localizacao_relato_idx` (`relato_idmapa` ASC) VISIBLE)
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
