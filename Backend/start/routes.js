@@ -18,3 +18,4 @@ const Route = use('Route')
 
 Route.post('/criarRelato', 'RelatoController.criar')
 Route.delete('/excluirRelato', 'RelatoController.excluir')
+Route.get('/listarRelatos', 'RelatoController.listar')
