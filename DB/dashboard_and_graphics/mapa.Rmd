@@ -1,0 +1,112 @@
+---
+title: "Mapa"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: row
+    vertical_layout: fill
+    #storyboard: true
+    theme: simplex
+#runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library("DBI")
+library(leaflet)
+library(plotly)
+library(shiny)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+con = dbConnect(RMySQL::MySQL(),
+              dbname = 'teste',
+              host = 'localhost',
+              user = 'root',
+              password = ''
+)
+
+df = dbGetQuery(con, "select lat, lng from mapa")
+```
+
+
+Pagina 1
+===
+Row {data-width=1920}
+-----------------------------------------------------------------------
+
+### Mapa
+
+```{r}
+df %>% leaflet() %>% addTiles() %>% 
+  addCircleMarkers(clusterOptions = markerClusterOptions()) %>% 
+  setView(df, lat = -19.8157, lng = -43.9542, zoom=12)
+```
+
+Pagina 2
+===
+
+Row
+-----------------------------------------------------------------------
+### Grafico 1
+
+```{r}
+p <- ggplot(data = df, aes(x = lat, fill = lng)) +
+            geom_bar(position = "dodge")
+ggplotly(p)
+```
+
+
+Row 
+-----------------------------------------------------------------------
+### Grafico 2
+```{r}
+x <- ggplot(data = df, aes(x = lng, fill = lat)) +
+            geom_bar(position = "dodge")
+ggplotly(x)
+
+```
+
+
+### Grafico 3
+```{r}
+a <- ggplot(data = df, aes(x = lat, fill = lng)) +
+            geom_bar(position = "dodge")
+ggplotly(a)
+```
+
+
+
+Pagina 3
+===
+
+Row
+-----------------------------------------------------------------------
+### Grafico 1
+
+```{r}
+p <- ggplot(data = df, aes(x = lat, fill = lng)) +
+            geom_bar(position = "dodge")
+ggplotly(p)
+```
+
+
+Row 
+-----------------------------------------------------------------------
+### Grafico 2
+```{r}
+x <- ggplot(data = df, aes(x = lng, fill = lat)) +
+            geom_bar(position = "dodge")
+ggplotly(x)
+
+```
+
+
+### Grafico 3
+```{r}
+a <- ggplot(data = df, aes(x = lat, fill = lng)) +
+            geom_bar(position = "dodge")
+ggplotly(a)
+```
+
+
