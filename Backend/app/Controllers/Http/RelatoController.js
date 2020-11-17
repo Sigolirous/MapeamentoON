@@ -3,8 +3,10 @@
 class RelatoController {
   async criar({ request, response }){
     const Database = use('Database')
+    /* Relato em que a vitima não tem relação com o autor */
       if(request.body.RELACAO_AGRESSOR === 0){
         const time = Date.now();
+        /* Inserção do relato na tabela "mapa" */
         try {
           await Database.table('mapa').insert({
             "RELACAO_AGRESSOR": request.body.RELACAO_AGRESSOR,
@@ -36,8 +38,10 @@ class RelatoController {
           })
         }
         try{
+          /* Uso da API de geolocalização responsável por traduzir endereço em latitude e longitude */
           const axios = require('axios')
           const geoLoc = await axios.post('http://www.mapquestapi.com/geocoding/v1/address?key=a3lI4kNnsvyOaPsgPKApD51NV21hAWET',{
+            /* Aqui eu usei uma variável genérica que já estabelece o endereço limitado à BH */
             "location": `${request.body.LOCAL} - Belo Horizonte - MG`,
             "options": {
               "thumbMaps": false,
@@ -45,6 +49,7 @@ class RelatoController {
             }
           })
           const latLng = geoLoc.data.results[0].locations[0].latLng
+          /* Essa variável é usada para sincronizar a tabela de relatos à tabela de locais */
           const posted =     await Database.select('idmapa').from('mapa').where({
             RELACAO_AGRESSOR: request.body.RELACAO_AGRESSOR,
             DATA: request.body.DATA,
@@ -68,7 +73,7 @@ class RelatoController {
             RELATO_MAO_LIVRE: request.body.RELATO_MAO_LIVRE,
             TIME: time
             })
-
+          /* Inserção das coordenadas geográficas na tabela "localizar" */
           await Database.table('localizar').insert({
             "LATITUDE":latLng.lat,
             "LONGITUDE":latLng.lng,
@@ -85,6 +90,7 @@ class RelatoController {
           })
         }
       }else{
+        /* Aqui acontece a mesma coisa do "if" acima, com a única diferença de também criamos um elemento novo na tabela "autor" */
         const time = Date.now()
         try {
           await Database.table('mapa').insert({
@@ -116,6 +122,7 @@ class RelatoController {
             mensagem: error
           })
         }
+        /* Variável usada para sincronizar o elemento "relato" aos elementos "coordenadas geográficas" e "autor" */
         const posted =     await Database.select('idmapa').from('mapa').where({
           RELACAO_AGRESSOR: request.body.RELACAO_AGRESSOR,
           DATA: request.body.DATA,
@@ -161,6 +168,7 @@ class RelatoController {
           })
         }
         try{
+          /* Inserção de um novo autor à tabela "autor" */
           await Database.table('autor').insert({
             "RELIGIAO_AUTOR":request.body.RELIGIAO_AUTOR,
             "RELACAO_COM_AUTOR":request.body.RELACAO_AGRESSOR,
