@@ -1,3 +1,8 @@
 
 *.mwb
 Backend/SQL.mwb.bak
+Backend/dashboard_and_graphics/lib/typedarray-0.1/typedarray.min.js
+*.css
+*.js
+*.map
+*.txt
