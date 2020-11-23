@@ -6,3 +6,4 @@ Backend/dashboard_and_graphics/lib/typedarray-0.1/typedarray.min.js
 *.js
 *.map
 *.txt
+.Rproj.user
